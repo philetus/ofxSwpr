@@ -13,22 +13,25 @@
 #include "ofMain.h"
 //#include "VoronoiDiagram.h"
 
-// define point concept for boost lib :P
-struct Point {
-    int X;
-    int Y;
-    Point(int x = 0, int y = 0) : X(x), Y(y) {}
-};
+namespace ofxSwpr {
+    // define point concept for boost lib :P
+    struct Point {
+        int X;
+        int Y;
+        Point(int x = 0, int y = 0) : X(x), Y(y) {}
+    };
+}
+
 namespace boost {
     namespace polygon {
         template <>
-        struct geometry_concept<Point> { typedef point_concept type; };
+        struct geometry_concept<ofxSwpr::Point> { typedef point_concept type; };
 
         template <>
-        struct point_traits<Point> {
+        struct point_traits<ofxSwpr::Point> {
             typedef int coordinate_type;
 
-            static inline coordinate_type get(const Point& point, orientation_2d orient) {
+            static inline coordinate_type get(const ofxSwpr::Point& point, orientation_2d orient) {
                 return (orient == HORIZONTAL) ? point.X : point.Y;
             }
         };
@@ -50,7 +53,7 @@ namespace ofxSwpr {
         std::vector<long long> gendxs;
         int clr;
         bool opn; // flag to set if perimeter not closed
-    }
+    };
 
     class Swpr {
 
@@ -76,4 +79,3 @@ namespace ofxSwpr {
     };
 
 }
-bo

@@ -11,15 +11,16 @@ public:
 
     void mousePressed(int x, int y, int button);
 
-    static glm::vec3 randomPointInRect(float x, float y, float w, float h, float padding=0) {
-        float rx = ofRandom(x+padding, x+(w-padding*2));
-        float ry = ofRandom(y+padding, y+(h-padding*2));
+    static glm::vec3 randInRect(float x, float y, float w, float h) {
+        float rx = ofRandom(x, x + w);
+        float ry = ofRandom(y, y + h);
         return glm::vec3(rx, ry, 0);
     }
-    static glm::vec3 randomPointInRect(const ofRectangle &r, float padding=0) {
-        return randomPointInRect(r.x, r.y, r.width, r.height, padding);
+    static glm::vec3 randInRect(const ofRectangle &r) {
+        return randInRect(r.x, r.y, r.width, r.height);
     }
     
     ofRectangle bounds;
-    ofxSwpr::ofxSwpr swpr;
+    ofxSwpr::Swpr swpr;
+    bool touched;
 };

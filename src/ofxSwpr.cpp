@@ -1,5 +1,5 @@
 #pragma warning(disable : 4503)
-#include "ofxBoostVoronoi.hpp"
+#include "ofxSwpr.h"
 
 namespace ofxSwpr {
 
@@ -59,9 +59,9 @@ namespace ofxSwpr {
         bvd.clear();
 
         // add point for each source
-        std::vector<Point> pnts;
+        std::vector<ofxSwpr::Point> pnts;
         for(long long i = 0; i < srcs.size(); i++)
-            pnts.push_back(Point(srcs[i].x, srcs[i].y));
+            pnts.push_back(ofxSwpr::Point(srcs[i].x, srcs[i].y));
 
         // call boost diagram generator
         construct_voronoi(pnts.begin(), pnts.end(), &bvd);

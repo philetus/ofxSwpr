@@ -9,13 +9,16 @@ void ofApp::setup() {
     
     int n = 10;
     for(int i=0; i<n; i++) {
-        swpr.addVertex(randomPointInRect(bounds));
+        swpr.addSource(randomPointInRect(bounds));
     }
+
+    touched = false;
 }
 
 void ofApp::update() {
-    if(swpr.touched()) {
+    if(touched) {
 		swpr.update(); // regenerate voronoi & delaunay meshes
+        touched = false;
 	}
 }
 
@@ -26,17 +29,16 @@ void ofApp::draw() {
     ofNoFill();
     ofDrawRectangle(bounds);
     
-    
     // draw the raw points
-    for(int i=0; i<swpr.vrts.size(); i++) {
+    for(int i=0; i<swpr.srcs.size(); i++) {
         ofSetColor(0);
         ofDrawCircle(swpr.vrts[i], 2);
     }
     
-    swpr.drawVoronoi();
-    swpr.drawDelaunay();
+    swpr.vrn.draw(OF_MESH_WIREFRAME);
 }
 
 void ofApp::mousePressed(int x, int y, int button){
-    swpr.addVertex(glm::vec3(x, y, 0));
+    swpr.addSource(glm::vec3(x, y, 0));
+    touched = true;
 }
