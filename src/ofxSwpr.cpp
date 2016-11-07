@@ -21,14 +21,17 @@ namespace ofxSwpr {
         // add center & get index
         msh.addVertex(srcs[srcdx]);
         std::size_t cntrdx = vdx++;
+        if(clrd) msh.addColor(clr);
 
         // add first vertex & get index
         msh.addVertex(gens[gendxs[0]]);
         std::size_t frstdx = vdx++;
+        if(clrd) msh.addColor(clr);
 
         std::size_t lstdx = frstdx;
         for (std::size_t i = 1; i < gendxs.size(); i++) {
             msh.addVertex(gens[gendxs[i]]); // add second vertex of edge
+            if(clrd) msh.addColor(clr);
 
             // build triangle for each edge
             msh.addIndex(cntrdx);
@@ -42,6 +45,15 @@ namespace ofxSwpr {
         msh.addIndex(frstdx);
     }
 
+    void Cll::setColor(ofColor c) {
+        clr.set(c);
+        clrd = true;
+    }
+
+    void Cll::clearColor() {
+        clrd = false;
+    }
+
     Swpr::Swpr() {}
     Swpr::~Swpr() {}
 
@@ -49,7 +61,7 @@ namespace ofxSwpr {
         srcs.push_back(glm::vec3(x, y, 0));
     }
 
-    void Swpr::update() {
+    void Swpr::diagram() {
 
         // clear everything except sources
         gens.clear();
@@ -118,6 +130,10 @@ namespace ofxSwpr {
                 clls.push_back(c);
             }
         }
+    }
+
+    void Swpr::mesh() {
+        vrn.clear();
 
         // build voronoi mesh
         vrn.setMode(OF_PRIMITIVE_TRIANGLES);

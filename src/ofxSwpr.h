@@ -45,15 +45,18 @@ namespace ofxSwpr {
     class Cll {
     public:
 
-        Cll(long long dx = -1) : srcdx(dx), clr(0), opn(false) {}
+        Cll(long long dx = -1) : srcdx(dx), clrd(false), opn(false) {}
         ~Cll() {}
 
         void mesh(ofVboMesh &msh, std::vector<glm::vec3>srcs, std::vector<glm::vec3> gens);
+        void setColor(ofColor c);
+        void clearColor();
 
         long long srcdx;
         std::vector<std::size_t> nbrdxs;
         std::vector<long long> gendxs;
-        int clr;
+        ofColor clr;
+        bool clrd;
         bool opn; // flag to set if perimeter not closed
     };
 
@@ -68,7 +71,8 @@ namespace ofxSwpr {
         void addSource(glm::vec3 src) {
             addSource(src.x, src.y);
         }
-        void update();
+        void diagram();
+        void mesh();
         void clear();
 
         std::vector<glm::vec3> srcs, gens; // source points to generate 
@@ -77,7 +81,7 @@ namespace ofxSwpr {
 
     private:
 
-        boost::polygon::voronoi_diagram<double> bvd;
+        voronoi_diagram<double> bvd;
     };
 
 }

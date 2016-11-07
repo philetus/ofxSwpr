@@ -12,13 +12,24 @@ void ofApp::setup() {
         swpr.addSource(randInRect(bounds));
     }
 
-    touched = false;
+    touched = true;
 }
 
 void ofApp::update() {
     if(touched) {
-		swpr.update(); // regenerate voronoi & delaunay meshes
+
+        // regenerate voronoi mesh
+		swpr.diagram();
+
+        // set cells to random colors
+        for(std::size_t i = 0; i < swpr.clls.size(); i++) {
+            swpr.clls[i].setColor(
+                ofColor(ofRandom(0, 255), ofRandom(0, 255), ofRandom(0, 255)));
+        }
+
+        swpr.mesh();
         touched = false;
+
 	}
 }
 
@@ -29,13 +40,15 @@ void ofApp::draw() {
     ofNoFill();
     ofDrawRectangle(bounds);
     
+    // draw the voronoi mesh
+    swpr.vrn.draw(OF_MESH_FILL);
+
     // draw the raw points
     for(int i=0; i<swpr.srcs.size(); i++) {
         ofSetColor(0);
         ofDrawCircle(swpr.srcs[i], 2);
     }
     
-    swpr.vrn.draw(OF_MESH_WIREFRAME);
 }
 
 void ofApp::mousePressed(int x, int y, int button){
