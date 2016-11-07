@@ -1,13 +1,13 @@
 #pragma once
 
-#define BOOST_POLYGON_NO_DEPS
-#define BOOST_NO_USER_CONFIG
-#define BOOST_NO_COMPILER_CONFIG
-#define BOOST_NO_STDLIB_CONFIG
-#define BOOST_NO_PLATFORM_CONFIG
-#define BOOST_HAS_STDINT_H
+// #define BOOST_POLYGON_NO_DEPS
+// #define BOOST_NO_USER_CONFIG
+// #define BOOST_NO_COMPILER_CONFIG
+// #define BOOST_NO_STDLIB_CONFIG
+// #define BOOST_NO_PLATFORM_CONFIG
+// #define BOOST_HAS_STDINT_H
 
-#define __GLIBC__ 0
+// #define __GLIBC__ 0
 
 #include "boost/polygon/voronoi.hpp"
 #include "ofMain.h"
@@ -38,6 +38,8 @@ namespace boost {
     }
 }
 
+using namespace boost::polygon;
+
 namespace ofxSwpr {
 
     class Cll {
@@ -48,7 +50,7 @@ namespace ofxSwpr {
 
         void mesh(ofVboMesh &msh, std::vector<glm::vec3>srcs, std::vector<glm::vec3> gens);
 
-        std::size_t srcdx;
+        long long srcdx;
         std::vector<std::size_t> nbrdxs;
         std::vector<long long> gendxs;
         int clr;

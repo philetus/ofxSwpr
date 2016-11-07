@@ -1,4 +1,4 @@
-#pragma warning(disable : 4503)
+//#pragma warning(disable : 4503)
 #include "ofxSwpr.h"
 
 namespace ofxSwpr {
@@ -55,7 +55,6 @@ namespace ofxSwpr {
         gens.clear();
         clls.clear();
         vrn.clear();
-        dlny.clear();
         bvd.clear();
 
         // add point for each source
@@ -67,7 +66,7 @@ namespace ofxSwpr {
         construct_voronoi(pnts.begin(), pnts.end(), &bvd);
 
         // build vector of generated voronoi vertices
-        std::map<const voronoi_vertex<double> *, std::size_t> vrtmap;
+        std::map<const voronoi_vertex<double> *, long long> vrtmap;
 
         // iterate over boost diagram & generate vertices & cells
         for (voronoi_diagram<double>::const_cell_iterator cllitr = bvd.cells().begin(); 
@@ -81,7 +80,7 @@ namespace ofxSwpr {
                 const voronoi_diagram<double>::edge_type *edg = cllitr->incident_edge();   
                 if(edg != NULL){
                     do {
-                        const voronoi_vertex<double> *vrtmap = edg->vertex0();
+                        const voronoi_vertex<double> *vvrt = edg->vertex0();
                             
                         // check for vertex in map
                         long long vvrtdx = -1;
@@ -92,7 +91,7 @@ namespace ofxSwpr {
                             // create vertex & add pointer to map with index
                             if(vrtmapitr == vrtmap.end()){
                                 glm::vec3 v = glm::vec3(vvrt->x(), vvrt->y(), 0);
-                                vvrtdx = (long long) vrts.size();
+                                vvrtdx = (long long) gens.size();
                                 gens.push_back(v); // add to generated vertices
                                 vrtmap[vvrt] = vvrtdx;
                             }
@@ -135,7 +134,6 @@ namespace ofxSwpr {
         gens.clear();
         clls.clear();
         vrn.clear();
-        dlny.clear();
         bvd.clear();
     }
 

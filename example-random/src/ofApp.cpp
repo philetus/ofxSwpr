@@ -9,7 +9,7 @@ void ofApp::setup() {
     
     int n = 10;
     for(int i=0; i<n; i++) {
-        swpr.addSource(randomPointInRect(bounds));
+        swpr.addSource(randInRect(bounds));
     }
 
     touched = false;
@@ -32,7 +32,7 @@ void ofApp::draw() {
     // draw the raw points
     for(int i=0; i<swpr.srcs.size(); i++) {
         ofSetColor(0);
-        ofDrawCircle(swpr.vrts[i], 2);
+        ofDrawCircle(swpr.srcs[i], 2);
     }
     
     swpr.vrn.draw(OF_MESH_WIREFRAME);
